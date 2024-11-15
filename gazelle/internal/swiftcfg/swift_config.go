@@ -95,6 +95,9 @@ type SwiftConfig struct {
 	// If set, Gazelle will apply this value to the import_prefix attribute
 	// within the proto_library_rule.
 	ImportPrefix string
+
+	// Whether to expose underlying targets in generated BUILD files.
+	ExposeUnderlyingTargets bool
 }
 
 func NewSwiftConfig() *SwiftConfig {
@@ -106,6 +109,7 @@ func NewSwiftConfig() *SwiftConfig {
 		ModuleNamingConvention:         "match_case",
 		OmitProtoSuffixFromModuleNames: true,
 		SwiftProtoGenerationMode:       "match",
+		ExposeUnderlyingTargets:        false,
 		GenerateSwiftProtoLibraries:    true,
 		GenerateSwiftProtoLibraryGRPCFlavors: []string{
 			"swift_client_proto",

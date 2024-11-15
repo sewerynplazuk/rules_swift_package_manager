@@ -181,6 +181,15 @@ _ALL_ATTRS = dicts.add(
     repo_rules.env_attrs,
     repo_rules.swift_attrs,
     {"version": attr.string(doc = "The resolved version of the package.")},
+    {"experimental_expose_build_files": attr.bool(
+        default = False,
+        doc =
+            "If True, exposes all individual build files required for Swift package compilation. " +
+            "\n\n" +
+            "WARNING: This option is experimental and should be used at your own risk. " +
+            "The structure and labels of exposed build files may change in future releases " +
+            "without requiring a major version bump."
+    )},
 )
 
 swift_package = repository_rule(
