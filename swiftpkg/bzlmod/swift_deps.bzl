@@ -5,7 +5,7 @@ load("//swiftpkg/internal:local_swift_package.bzl", "local_swift_package")
 load("//swiftpkg/internal:pkginfos.bzl", "pkginfos")
 load("//swiftpkg/internal:repository_utils.bzl", "repository_utils")
 load("//swiftpkg/internal:swift_deps_info.bzl", "swift_deps_info")
-load("//swiftpkg/internal:swift_package.bzl", "PATCH_ATTRS", "swift_package")
+load("//swiftpkg/internal:swift_package.bzl", "EXPERIMENTAL_ATTRS", "PATCH_ATTRS", "swift_package")
 load("//swiftpkg/internal:swift_package_tool.bzl", "SWIFT_PACKAGE_CONFIG_ATTRS")
 load("//swiftpkg/internal:swift_package_tool_repo.bzl", "swift_package_tool_repo")
 
@@ -162,6 +162,7 @@ def _declare_pkg_from_dependency(dep, config_pkg):
         patch_cmds_win = None
         patch_tool = None
         patches = None
+        experimental_expose_build_files = None
         if config_pkg:
             init_submodules = config_pkg.init_submodules
             recursive_init_submodules = config_pkg.recursive_init_submodules
@@ -170,6 +171,7 @@ def _declare_pkg_from_dependency(dep, config_pkg):
             patch_cmds_win = config_pkg.patch_cmds_win
             patch_tool = config_pkg.patch_tool
             patches = config_pkg.patches
+            experimental_expose_build_files = config_pkg.experimental_expose_build_files
 
         pin = dep.source_control.pin
         swift_package(
@@ -186,6 +188,7 @@ def _declare_pkg_from_dependency(dep, config_pkg):
             patch_cmds_win = patch_cmds_win,
             patch_tool = patch_tool,
             patches = patches,
+            experimental_expose_build_files = experimental_expose_build_files,
         )
 
     elif dep.file_system:
@@ -291,7 +294,7 @@ The identity (i.e., name in the package's manifest) for the Swift package.\
             default = True,
             doc = "Whether to clone submodules recursively in the repository.",
         ),
-    } | PATCH_ATTRS,
+    } | PATCH_ATTRS | EXPERIMENTAL_ATTRS,
     doc = "Used to add or override settings for a particular Swift package.",
 )
 

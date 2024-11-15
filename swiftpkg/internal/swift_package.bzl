@@ -175,21 +175,23 @@ PATCH_ATTRS = {
     ),
 }
 
+EXPERIMENTAL_ATTRS = {
+    "experimental_expose_build_files": attr.bool(
+        default = False,
+        doc = "Allows to expose all individual build files required for Swift package compilation. " +
+            "WARNING: This option is experimental and should be used at your own risk. " +
+            "The structure and labels of exposed build files may change in future releases " +
+            "without requiring a major version bump.",
+    )
+}
+
 _ALL_ATTRS = dicts.add(
     PATCH_ATTRS,
+    EXPERIMENTAL_ATTRS,
     _GIT_ATTRS,
     repo_rules.env_attrs,
     repo_rules.swift_attrs,
-    {"version": attr.string(doc = "The resolved version of the package.")},
-    {"experimental_expose_build_files": attr.bool(
-        default = False,
-        doc =
-            "If True, exposes all individual build files required for Swift package compilation. " +
-            "\n\n" +
-            "WARNING: This option is experimental and should be used at your own risk. " +
-            "The structure and labels of exposed build files may change in future releases " +
-            "without requiring a major version bump."
-    )},
+    {"version": attr.string(doc = "The resolved version of the package.")}
 )
 
 swift_package = repository_rule(
